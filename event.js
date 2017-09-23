@@ -1,7 +1,8 @@
 chrome.runtime.onMessage.addListener(function (request, sender) {
     if (request.action == "getSource") {
         chrome.storage.local.set({ "sourceMsg": request.source }, function () {
-            //message.innerText = request.source;
+            // message.innerText = "1";
+            
             filterMsg();
         });
     }
@@ -12,7 +13,6 @@ chrome.runtime.onMessage.addListener(function (request, sender) {
         })
     }
 });
-
 function filterMsg() {
     chrome.tabs.executeScript(null, {
         file: "FilterKeyWord.js"
@@ -48,10 +48,12 @@ function getSource() {
 }
 
 function onWindowLoad() {
-    //var message = document.querySelector('#message');
+    // var message = document.querySelector('#message');
+    console.log(message);
     chrome.webNavigation.onCompleted.addListener(getSource);
     chrome.webNavigation.onHistoryStateUpdated.addListener(getSource);
-    setInterval(getSource, 1000);
+    getSource();
+
 }
 
 window.onload = onWindowLoad;

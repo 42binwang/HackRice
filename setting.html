@@ -12,6 +12,7 @@
     <script type="text/javascript" src="js/init.js"></script>
 </head>
 <body>
+    <script type="text/javascript" src="setting.js"></script>
     <nav class="light-blue lighten-1" role="navigation">
         <div class="nav-wrapper container">
             <a id="logo-container" href="#" class="brand-logo">Logo</a>
@@ -38,15 +39,15 @@
                 <li class="tab"><a href="#test4" class="active">Main</a></li>
                 <li class="tab"><a href="#test5">Rules</a></li>
                 <li class="tab"><a href="#test6">Log</a></li>
-                <li class="tab"><a href="#test7">PPP</a></li>
-                <li class="tab"><a href="#test8">PPP</a></li>
+                <li class="tab"><a href="#test7">Parent</a></li>
+                <li class="tab"><a href="#test8">About</a></li>
             </ul>
         </div>
         <div class="card-content grey lighten-4">
             <div id="test4">
                 <div class="collection">
                     <a  class="collection-item">
-                        Test 1
+                        Filter
                         <div class="switch right">
                             <label>
                                 <input type="checkbox">
@@ -83,12 +84,78 @@
                     </a>
                 </div>
             </div>
+
+
+
+
+
+            <!-- RULES -->
             <div id="test5">
-                Test 2
+                <div class="collection">
+                    <a class="collection-item">
+                        <div id="ww"></div>
+                        <div>
+                            <input type="text" id="newword"><br>
+                            <input type="submit" value="update" id="update"> <br>
+                            <input type="text" id="deleteword"><br>
+                            <input type="submit" value="delete" id="delete"> 
+                        </div>
+                    </a> 
+                </div>
             </div>
+
+
+
+
+
+
+
+            <!-- LOG -->
             <div id="test6">Test 3</div>
+            <!-- PARENT -->
             <div id="test7">Test 4</div>
-            <div id="test8">Test 4</div>
+            <!-- ABOUT -->
+            <div id="test8">
+                    <div class="collection">
+                            <a class="collection-item">
+                                some information..
+                            </a> 
+                        </div>
+                        <div style="text-align:center">Contact Us</div><br>
+                        <div style="float:left; margin: 0cm 0 0 8cm">
+                            TEL: 340-200-1000
+                        </div>
+                        <div style="float:right; margin: 0cm 8cm 0 0">
+                            FAX: 200-100-3000
+                        </div><br>
+                        <div style="float:left; margin: 0 0 0 8cm">
+                            TEL: 430-100-2000
+                        </div>
+                        <div style="float:right; margin: 0 8cm 0 0">
+                            FAX: 300-130-2000
+                        </div><br><br>
+                        <div style="margin-left:0.5cm">
+                            America    
+                        </div>
+                        <div><hr style="height:1px;border:none;border-top:1px solid; color:#4B5E4F;" /></div>
+                        <div style="width:800px; margin:0 auto">
+                            <div>
+                                <img style="float:left; margin: 0 0 100px 0" height="80px"src="http://static.home.baidu.com/homebd/jhmlgefinkadbc1496932028.png?authorization=bce-auth-v1%2Fe6803def36ae467f81ebdb4bdc75f119%2F2017-06-08T14%3A27%3A08Z%2F-1%2F%2F3d81f1beeb8a94b113e4fffd76669f666547f9de7d60fd28ebc4126339f92536">
+                            </div>
+                            <div style="font-size:2em; float:right; color:#318FC9">
+                                Rice University
+                            </div><br><br><br>
+                            <div style="float:right">
+                                6100 Main St, Houston
+                            </div><br>
+                            <div style="float:right">
+                                Post Code: TX 77005
+                            </div>
+                        </div>
+            </div>
+            
+
+                
         </div>
     </div>
     <!-- Modal Trigger -->
