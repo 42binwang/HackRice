@@ -35,12 +35,12 @@ function logKeyWord() {
     }
 }
 
-function getSource() {
-    chrome.tabs.executeScript(null, {
+function getSource(tabId) {
+    chrome.tabs.executeScript(tabId, {
         file: "sentimood.js"
     },
     function () {
-        chrome.tabs.executeScript(null, {
+        chrome.tabs.executeScript(tabId, {
             file: "getPagesSource.js"
         },
         function () {
@@ -60,19 +60,21 @@ function onWindowLoad() {
     // var message = document.querySelector('#message');
     console.log("ppp");
     chrome.webNavigation.onCompleted.addListener(function(details) {
-        console.log("test");
-        console.log(details);
         if(details.frameId == 0)
-            getSource();
+            getSource(details.tabId);
     }); 
 
-    chrome.webNavigation.onReferenceFragmentUpdated.addListener(function(details){
+    chrome.webNavigation.onHistoryStateUpdated.addListener(function (details) {
         console.log(details);
+        if (details.frameId == 0) {
+            console.log("xx");
+            setTimeout(getSource, 3000,details.tabId);
+        }
     })
 
-    chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab){
-        console.log(changeInfo);
-    })
+    //chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab){
+    //    console.log(changeInfo);
+    //})
 
     //getSource();
 

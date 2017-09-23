@@ -35,6 +35,8 @@ function Check(isReplace)
     var flag = false;
     var senwords = [];
 
+    //console.log(text);
+
     for(var i=0; i<keywords.length; i++) {
         if (text.indexOf(keywords[i]) != -1) {
             console.log(keywords[i]);
