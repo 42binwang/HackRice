@@ -37,9 +37,18 @@ function logKeyWord() {
 
 function getSource() {
     chrome.tabs.executeScript(null, {
-        file: "getPagesSource.js"
+        file: "sentimood.js"
     },
     function () {
+        chrome.tabs.executeScript(null, {
+            file: "getPagesSource.js"
+        },
+        function () {
+            // If you try and inject into an extensions page or the webstore/NTP you'll get an error
+            if (chrome.runtime.lastError) {
+                //message.innerText = 'There was an error injecting script : \n' + chrome.runtime.lastError.message;
+            }
+        }); 
         // If you try and inject into an extensions page or the webstore/NTP you'll get an error
         if (chrome.runtime.lastError) {
             //message.innerText = 'There was an error injecting script : \n' + chrome.runtime.lastError.message;
@@ -49,10 +58,23 @@ function getSource() {
 
 function onWindowLoad() {
     // var message = document.querySelector('#message');
-    console.log(message);
-    chrome.webNavigation.onCompleted.addListener(getSource);
-    chrome.webNavigation.onHistoryStateUpdated.addListener(getSource);
-    getSource();
+    console.log("ppp");
+    chrome.webNavigation.onCompleted.addListener(function(details) {
+        console.log("test");
+        console.log(details);
+        if(details.frameId == 0)
+            getSource();
+    }); 
+
+    chrome.webNavigation.onReferenceFragmentUpdated.addListener(function(details){
+        console.log(details);
+    })
+
+    chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab){
+        console.log(changeInfo);
+    })
+
+    //getSource();
 
 }
 
