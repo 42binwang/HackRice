@@ -54,8 +54,4 @@ function onWindowLoad() {
     setInterval(getSource, 1000);
 }
 
-function test() {
-    alert("etst");
-}
-
 window.onload = onWindowLoad;
