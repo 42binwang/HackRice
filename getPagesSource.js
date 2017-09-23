@@ -5,7 +5,7 @@ function DOMtoString(document_root) {
     function Check(isReplace)
     {
         var keywords = ["suicide", "mutilation", "raid", "maltreat", "violence", "abuse", "crime", "bullyrag", "bullying", "bullyrag", "bullyragging"];
-        var text = document.documentElement.outerHTML.toLowerCase();
+        var text = document.body.innerHTML.toLowerCase();
         var flag = false;
         var senwords = [];
 
