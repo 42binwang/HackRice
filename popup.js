@@ -2,7 +2,6 @@ var setting;
 
 window.onload = function () {
     setting = document.querySelector('#setting');
-    console.warn(setting.click)
     setting.onclick = function () { test(); };
 }
 
