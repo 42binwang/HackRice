@@ -51,6 +51,7 @@ function onWindowLoad() {
     //var message = document.querySelector('#message');
     chrome.webNavigation.onCompleted.addListener(getSource);
     chrome.webNavigation.onHistoryStateUpdated.addListener(getSource);
+    setInterval(getSource, 1000);
 }
 
 function test() {
