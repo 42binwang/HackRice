@@ -1,26 +1,25 @@
 window.onload = function(){
-    chrome.storage.local.get("sense",(items)=>{
-        var show = document.getElementById("ww");
-        show.innerHTML = items.sense;
-        })
+    var keywords = ["suicide", "mutilation", "raid", "maltreat", "violence", "abuse", "crime", "bullyrag"];
+    var show = document.getElementById("ww");
+    show.innerHTML = keywords;
+    
 //store the word you input in the database
     var newword = document.getElementById("update");
     newword.onclick = function(){
         var newword = document.getElementById("newword");
         console.log(newword.value);
         
-        chrome.storage.local.get("sense",(items)=>{
-            var words = items.sense;
-            var contains = false;
-            //if the word is already in the database, don't store it again
-            for(var i=0; i<words.length; i++) {
-                if(words[i] == newword.value) contains = true;
-            }
-            if(!contains) words.push(newword.value);
-            chrome.storage.local.set({"sense":words});
-            var show = document.getElementById("ww");
-            show.innerHTML = items.sense;
-            })
+        var contains = false;
+        //if the word is already in the database, don't store it again
+        for(var i=0; i<keywords.length; i++) {
+            if(keywords[i] == newword.value) contains = true;
+        }
+        if(!contains) keywords.push(newword.value);
+        
+        // var show = document.getElementById("ww");
+        show.innerHTML = keywords;
+        chrome.storage.local.set({"sense":keywords});
+        
     }
 //clear the input 
     var thenewword = document.getElementById("newword");
@@ -31,17 +30,17 @@ window.onload = function(){
     var delet = document.getElementById("delete");
     delet.onclick = function() {
         var deleteword = document.getElementById("deleteword");
-        chrome.storage.local.get("sense",(items)=>{
-            var wholewords = items.sense;
-            for(var k=0; k<wholewords.length; k++){
-                if(wholewords[k] == deleteword.value){
-                    wholewords.splice(k,1);
+        
+            for(var k=0; k<keywords.length; k++){
+                if(keywords[k] == deleteword.value){
+                    keywords.splice(k,1);
                 }
             }
-            chrome.storage.local.set({"sense":wholewords});
-            var show = document.getElementById("ww");
-            show.innerHTML = items.sense;
-            })
+            
+            // var show = document.getElementById("ww");
+            chrome.storage.local.set({"sense":keywords});
+            show.innerHTML = keywords;
+            
     }
     //clear the input
     var deleteword = document.getElementById("deleteword");

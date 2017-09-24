@@ -61,10 +61,16 @@ angular.module('popupApp', [])
         var keyWordList = this;
 
         keyWordList.keyWords = [];
-        console.log(keyWordList.keyWords);
+       
 
-        chrome.storage.local.get("sense", (items) => {
-            keyWordList.keyWords = items.sense;
+        chrome.storage.local.get("detected", (items) => {
+            keyWordList.keyWords = items.detected;
+            console.log(keyWordList.keyWords);
             $scope.$apply();
         });
+
+        // keyWordList.keyWords = localStorage.words;
+        // console.log(keyWordList.keyWords);
+        // $scope.$apply();
+
     });

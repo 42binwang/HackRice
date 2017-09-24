@@ -30,16 +30,19 @@ function DOMtoString(document_root) {
 
 function Check(isReplace)
 {
-    var keywords = ["suicide", "mutilation", "raid", "maltreat", "violence", "abuse", "crime", "bullyrag", "bullying", "bullyrag", "bullyragging"];
+    // var keywords = ["suicide", "mutilation", "raid", "maltreat", "violence", "abuse", "crime", "bullyrag", "bullying", "bullyrag", "bullyragging"];
     var text = document.body.innerHTML.toLowerCase();
     var flag = false;
     var senwords = [];
 
     //console.log(text);
-
+    chrome.storage.local.get("sense",(items) =>{
+        var keywords = items.sense;
+        //put the words in the localStorage
+        localStorage.words = keywords;
+        
     for(var i=0; i<keywords.length; i++) {
         if (text.indexOf(keywords[i]) != -1) {
-            console.log(keywords[i]);
             flag = true;
             senwords.push(keywords[i]);
             String.prototype.str_times = function (max) {
@@ -56,11 +59,11 @@ function Check(isReplace)
             }
         }
     }
-    for(var i=0; i<senwords.length; i++) {
-        console.log(senwords[i]);
-    }
+    chrome.storage.local.set({"detected":senwords});
+    
+    })
     //store the word(detected from present webpage) in the database
-    chrome.storage.local.set({"sense":senwords});
+    console.log(senwords);
     return flag;
 }
 

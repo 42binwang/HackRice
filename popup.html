@@ -24,11 +24,11 @@
         <div class="card blue-grey darken-1">
             <div class="card-content white-text" ng-controller="chickenListController as chickenList">
                 <span class="card-title">Card Title</span>
-                <p ng-repeat="chicken in chickenList.showList"><br/>{{chicken}}<br/></p>
+                <p ng-repeat="chicken in chickenList.showList track by $index"><br/>{{chicken}}<br/></p>
             </div>
             <div class="card-content white-text" ng-controller="keyWordListController as keyWordList">
                 <span class="card-title">Title</span>
-                <p ng-show="keyWordList.keyWords.length > 0" ng-repeat="keyWord in keyWordList.keyWords">{{keyWord}} is what you should keep away from!<br /></p>
+                <p ng-show="keyWordList.keyWords.length > 0" ng-repeat="keyWord in keyWordList.keyWords track by $index">{{keyWord}} is what you should keep away from!<br /></p>
             </div>
             <div class="card-action">
                 <a href="#">This is a link</a>
