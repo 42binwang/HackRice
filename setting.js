@@ -60,6 +60,27 @@ window.onload = function(){
         } 
     }
 
+    var parentUnchecked = true;
+    var parent = document.getElementById("parent");
+    parent.onclick = function (passwd) {
+        if (parentUnchecked) {
+            var input = prompt("Password Required!", "Please Input password");
+            var passwd = "123456";
+            if (input != null && input == passwd) {
+                var main = document.getElementById("main");
+                var rules = document.getElementById("rules");
+                var log = document.getElementById("log");
+                main.className = "tab";
+                rules.className = "tab";
+                log.className = "tab";
+                parentUnchecked = false;
+                //alert(main.className);
+                alert("Correct!");
+            } else {
+                alert("Wrong password");
+            }
+        }
+    }
 
 }
 
