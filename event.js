@@ -1,4 +1,7 @@
-var useable=true;
+var useSwitch = localStorage.useSwitch;
+var filterSwitch = localStorage.filterSwitch;
+var chickenSoupSwitch = localStorage.chickenSoupSwitch;
+var keyWordsSwitch = localStorage.keyWordsSwitch;
 
 chrome.runtime.onMessage.addListener(function (request, sender) {
     if (request.action == "getSource") {
@@ -13,9 +16,28 @@ chrome.runtime.onMessage.addListener(function (request, sender) {
         })
     }
 
-    if (request.action == "changeUse") {
-        useable = request.source;
-        chrome.storage.local.set({ "useable": useable });
+    if (request.action == "changeUseSwitch") {
+        useSwitch = request.source;
+        chrome.storage.local.set({ "useSwitch": useSwitch });
+        localStorage.useSwitch = useSwitch;
+    }
+
+    if (request.action == "changeFilterSwitch") {
+        filterSwitch = request.source;
+        chrome.storage.local.set({ "filterSwitch": filterSwitch });
+        localStorage.filterSwitch = filterSwitch;
+    }
+
+    if (request.action == "changeChickenSoupSwitch") {
+        chickenSoupSwitch = request.source;
+        chrome.storage.local.set({ "chickenSoupSwitch": chickenSoupSwitch });
+        localStorage.chickenSoupSwitch = chickenSoupSwitch;
+    }
+
+    if (request.action == "changeKeyWordsSwitch") {
+        keyWordsSwitch = request.source;
+        chrome.storage.local.set({ "keyWordsSwitch": keyWordsSwitch });
+        localStorage.keyWordsSwitch = keyWordsSwitch;
     }
 });
 function filterMsg() {
@@ -62,15 +84,22 @@ function getSource(tabId) {
 }
 
 function onWindowLoad() {
+
+    chrome.storage.local.set({ "useSwitch": useSwitch });
+    chrome.storage.local.set({ "filterSwitch": filterSwitch });
+    chrome.storage.local.set({ "chickenSoupSwitch": chickenSoupSwitch });
+    chrome.storage.local.set({ "keyWordsSwitch": keyWordsSwitch });
+    console.log(keyWordsSwitch);
+
     // var message = document.querySelector('#message');
     chrome.webNavigation.onCompleted.addListener(function(details) {
-        if (details.frameId == 0 && useable)
+        if (details.frameId == 0 && useSwitch)
             getSource(details.tabId);
     }); 
 
     chrome.webNavigation.onHistoryStateUpdated.addListener(function (details) {
         console.log(details);
-        if (details.frameId == 0 && useable) {
+        if (details.frameId == 0 && useSwitch) {
             setTimeout(getSource, 3000,details.tabId);
         }
     })

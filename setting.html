@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html>
+<html ng-app="settingApp">
 <head>
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -10,9 +10,10 @@
     <script type="text/javascript" src="js/materialize.js"></script>
     <script type="text/javascript" src="js/lunr.min.js"></script>
     <script type="text/javascript" src="js/init.js"></script>
+    <script type="text/javascript" src="js/angular.min.js"></script>
+    <script type="text/javascript" src="setting.js"></script>
 </head>
 <body>
-    <script type="text/javascript" src="setting.js"></script>
     <nav class="light-blue lighten-1" role="navigation">
         <div class="nav-wrapper container">
             <a id="logo-container" href="#" class="brand-logo"><img style="width:60px" src="icon.png"></a>
@@ -30,44 +31,44 @@
             </ul>
         </div>
         <div class="card-content grey lighten-4">
-            <div id="test4">
+            <div id="test4" ng-controller="mainSettingController as mainSetting">
                 <div class="collection">
-                    <a  class="collection-item">
+                    <div class="collection-item">
                         General
                         <div class="switch right">
                             <label>
-                                <input type="checkbox">
+                                <input type="checkbox" ng-model="mainSetting.useSwitch" ng-change="mainSetting.changeUseSwitch()">
                                 <span class="lever"></span>
                             </label>
                         </div>
-                    </a>
-                    <a class="collection-item">
+                    </div>
+                    <div class="collection-item">
                         Filter
                         <div class="switch right">
                             <label>
-                                <input type="checkbox">
+                                <input type="checkbox" ng-model="mainSetting.filterSwitch" ng-change="mainSetting.changeFilterSwitch()">
                                 <span class="lever"></span>
                             </label>
                         </div>
-                    </a>
-                    <a class="collection-item">
+                    </div>
+                    <div class="collection-item">
                         Chicken Soup
                         <div class="switch right">
                             <label>
-                                <input type="checkbox">
+                                <input type="checkbox" ng-model="mainSetting.chickenSoupSwitch" ng-change="mainSetting.changeChickenSoupSwitch()">
                                 <span class="lever"></span>
                             </label>
                         </div>
-                    </a>
-                    <a class="collection-item">
+                    </div>
+                    <div class="collection-item">
                         Keywords
                         <div class="switch right">
                             <label>
-                                <input type="checkbox">
+                                <input type="checkbox" ng-model="mainSetting.keyWordsSwitch" ng-change="mainSetting.changeKeyWordsSwitch()">
                                 <span class="lever"></span>
                             </label>
                         </div>
-                    </a>
+                    </div>
                 </div>
             </div>
 

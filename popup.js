@@ -9,24 +9,69 @@ function openSetting() {
 }
 
 angular.module('popupApp', [])
-  .controller('useController', function ($scope) {
-      var use = this;
-      use.useable = true;
+  .controller('useSwitchController', function ($scope) {
+      var useSwitch = this;
+      useSwitch.useSwitch = true;
 
-      chrome.storage.local.get("useable", (items) => {
-          if (items.useable != undefined) {
-              use.useable = items.useable;
+      chrome.storage.local.get("useSwitch", (items) => {
+          if (items.useSwitch != undefined) {
+              useSwitch.useSwitch = items.useSwitch;
           }
           $scope.$apply();
       });
 
-      use.change = function () {
+      useSwitch.changeUseSwitch = function () {
           chrome.runtime.sendMessage({
-              action: "changeUse",
-              source: use.useable
+              action: "changeUseSwitch",
+              source: use.useSwitch
           });
       }
+
+      chrome.runtime.onMessage.addListener(function (request, sender) {
+          if (request.action == "changeUseSwitch") {
+              useSwitch.useSwitch = request.source;
+              $scope.$apply();
+          }
+      });
   })
+    .controller('chickenSoupSwitchController', function () {
+        var chickenSoupSwitch = this;
+
+        chickenSoupSwitch.chickenSoupSwitch = true;
+
+        chrome.storage.local.get("chickenSoupSwitch", (items) => {
+            if (items.chickenSoupSwitch != undefined) {
+                chickenSoupSwitch.chickenSoupSwitch = items.chickenSoupSwitch;
+            }
+            $scope.$apply();
+        });
+
+        chrome.runtime.onMessage.addListener(function (request, sender) {
+            if (request.action == "chickenSoupSwitch") {
+                chickenSoupSwitch.chickenSoupSwitch = request.source;
+                $scope.$apply();
+            }
+        });
+    })
+    .controller('keyWordsSwitchController', function () {
+        var keyWordsSwitch = this;
+
+        keyWordsSwitch.keyWordsSwitch = true;
+
+        chrome.storage.local.get("keyWordsSwitch", (items) => {
+            if (items.keyWordsSwitch != undefined) {
+                keyWordsSwitch.keyWordsSwitch = items.keyWordsSwitch;
+            }
+            $scope.$apply();
+        });
+
+        chrome.runtime.onMessage.addListener(function (request, sender) {
+            if (request.action == "keyWordsSwitch") {
+                keyWordsSwitch.keyWordsSwitch = request.source;
+                $scope.$apply();
+            }
+        });
+    })
     .controller('chickenListController', function () {
         var chickenList = this;
         chickenList.chickens = [

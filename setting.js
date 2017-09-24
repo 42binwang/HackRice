@@ -1,4 +1,78 @@
-window.onload = function(){
+angular.module('settingApp', [])
+  .controller('mainSettingController', function ($scope) {
+      var mainSetting = this;
+
+      mainSetting.useSwitch = true;
+      mainSetting.filterSwitch = true;
+      mainSetting.chickenSoupSwitch = true;
+      mainSetting.keyWordsSwitch = true;
+
+      chrome.storage.local.get("useSwitch", (items) => {
+          if (items.useSwitch != undefined) {
+              mainSetting.useSwitch = items.useSwitch;
+          }
+          $scope.$apply();
+      });
+
+      chrome.storage.local.get("filterSwitch", (items) => {
+          if (items.filterSwitch != undefined) {
+              mainSetting.filterSwitch = items.filterSwitch;
+          }
+          $scope.$apply();
+      });
+
+      chrome.storage.local.get("chickenSoupSwitch", (items) => {
+          if (items.chickenSoupSwitch != undefined) {
+              mainSetting.chickenSoupSwitch = items.chickenSoupSwitch;
+          }
+          $scope.$apply();
+      });
+
+      chrome.storage.local.get("keyWordsSwitch", (items) => {
+          if (items.keyWordsSwitch != undefined) {
+              mainSetting.keyWordsSwitch = items.keyWordsSwitch;
+          }
+          $scope.$apply();
+      });
+
+      mainSetting.changeUseSwitch = function () {
+          chrome.runtime.sendMessage({
+              action: "changeUseSwitch",
+              source: mainSetting.useSwitch
+          });
+      }
+
+      mainSetting.changeFilterSwitch = function () {
+          chrome.runtime.sendMessage({
+              action: "changeFilterSwitch",
+              source: mainSetting.filterSwitch
+          });
+      }
+
+      mainSetting.changeChickenSoupSwitch = function () {
+          chrome.runtime.sendMessage({
+              action: "changeChickenSoupSwitch",
+              source: mainSetting.chickenSoupSwitch
+          });
+      }
+
+      mainSetting.changeKeyWordsSwitch = function () {
+          chrome.runtime.sendMessage({
+              action: "changeKeyWordsSwitch",
+              source: mainSetting.keyWordsSwitch
+          });
+      }
+
+      chrome.runtime.onMessage.addListener(function (request, sender) {
+          if (request.action == "changeUseSwitch") {
+              mainSetting.useSwitch = request.source;
+              $scope.$apply();
+          }
+      });
+
+  });
+
+window.onload = function () {
     var keywords = ["suicide", "mutilation", "raid", "maltreat", "violence", "abuse", "crime", "bullyrag"];
     var show = document.getElementById("ww");
     show.innerHTML = keywords;
