@@ -70,6 +70,19 @@ window.onload = function(){
         }
     }
 
+    //the code for log
+    var showurl = document.getElementById("showurl");
+    chrome.storage.local.get("url",(items)=>{
+        var urls = items.url;
+        var result = "";
+        for(var i=0; i<urls.length;i++){
+            console.log(urls[i])
+            result += urls[i]+"<br>";
+        }
+        showurl.innerHTML = result;
+
+    })
+
 }
 
 function update(){

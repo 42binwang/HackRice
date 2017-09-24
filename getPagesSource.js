@@ -34,6 +34,22 @@ function Check(isReplace)
     var text = document.body.innerHTML.toLowerCase();
     var flag = false;
     var senwords = [];
+    console.log(window.location.href);
+
+    chrome.storage.local.get("url",(items) =>{
+        var urlss = [];
+        var urls = items.url;
+        if(urls == null) urlss.push(window.location.href);
+        else {
+            for(var i=0; i<urls.length;i++){
+                urlss.push(urls[i])
+            }
+            urlss.push(window.location.href);
+        }
+        chrome.storage.local.set({"url":urlss});
+    
+    })
+
 
     //console.log(text);
     chrome.storage.local.get("sense",(items) =>{
