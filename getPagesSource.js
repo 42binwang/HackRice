@@ -83,14 +83,59 @@ function Check(isReplace)
     return flag;
 }
 
-function Run() {    
-    if(Check(1)==true) alert("Need Help?");
-    else{
-        var text = DOMtoString(document).toLowerCase();
-        var sentimood = new Sentimood();
-        var analysis = sentimood.analyze(text);
-        if(analysis["score"]<-100) alert("Negative News!");
-    }
+function Run() {
+
+    console.log(window.location.href);
+
+    chrome.storage.local.get("url", (items) => {
+        var urlss = [];
+        var urls = items.url;
+        if (urls == null) urlss.push(window.location.href);
+        else {
+            for (var i = 0; i < urls.length; i++) {
+                urlss.push(urls[i])
+            }
+            urlss.push(window.location.href);
+        }
+        chrome.storage.local.set({ "url": urlss });
+
+        chrome.storage.local.get("sense", (items) => {
+            var text = document.body.innerHTML.toLowerCase();
+            var flag = false;
+            var senwords = [];
+            var keywords = items.sense;
+            //put the words in the localStorage
+            localStorage.words = keywords;
+
+            for (var i = 0; i < keywords.length; i++) {
+                if (text.indexOf(keywords[i]) != -1) {
+                    flag = true;
+                    senwords.push(keywords[i]);
+                    String.prototype.str_times = function (max) {
+                        var ret = this;
+                        for (var i = 0; i < max - 1; i++) {
+                            ret += this;
+                        }
+                        return ret;
+                    }
+                    {
+                        document.body.innerHTML = document.body.innerHTML.replace(new RegExp(keywords[i], 'gm'), "*".str_times(keywords[i].length))
+                        document.body.innerHTML = document.body.innerHTML.replace(new RegExp(keywords[i].toUpperCase(), 'gm'), "*".str_times(keywords[i].length))
+                        document.body.innerHTML = document.body.innerHTML.replace(new RegExp(keywords[i].substring(0, 1).toUpperCase() + keywords[i].substring(1), 'gm'), "*".str_times(keywords[i].length))
+                    }
+                }
+            }
+            chrome.storage.local.set({ "detected": senwords });
+
+            if (flag == true) alert("Need Help?");
+            else {
+                var text = DOMtoString(document).toLowerCase();
+                var sentimood = new Sentimood();
+                var analysis = sentimood.analyze(text);
+                if (analysis["score"] < -100) alert("Negative News!");
+            }
+        })
+    })
 }
 
 chrome.runtime.sendMessage({
