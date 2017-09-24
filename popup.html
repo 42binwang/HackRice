@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app>
+<html ng-app="popupApp">
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
     <script src="js/angular.min.js"></script>
@@ -7,14 +7,14 @@
 </head>
 <body style="width:300px">
 	<nav>
-		<div class="nav-wrapper">
+		<div class="nav-wrapper" ng-controller="useController as use">
 			<div class="col s12 m6">
 				<a class="brand-logo left"><img style="width:25px" src="icon.png" /></a>
 			</div>
 			<div class="switch right">
 			<label>
-				<input type="checkbox" ng-model="use">
-				<span class="lever">{{use}}</span>
+				<input type="checkbox" ng-model="use.use" ng-change="use.test()">
+				<span class="lever"></span>
 			</label>
 			</div>
 		</div>
@@ -22,17 +22,19 @@
 	<div class="row">
       <div class="col s12 m6">
         <div class="card blue-grey darken-1">
-          <div class="card-content white-text">
-            <span class="card-title">Card Title</span>
-            <p id="chickensoup">It's a great day!</p>
-            <div id="suicide" style="display:none"></div>
-            <div id="rage" style="display:none"></div>
-          </div>
-          <div class="card-action">
-            <a href="#">This is a link</a>
-            <a href="#">This is a link</a>
-          </div>
-        </div>
+            <div class="card-content white-text" ng-controller="chickenListController as chickenList">
+                <span class="card-title">Card Title</span>
+                <p ng-repeat="chicken in chickenList.showList"><br/>{{chicken}}<br/></p>
+            </div>
+            <div class="card-content white-text" ng-controller="keyWordListController as keyWordList">
+                <span class="card-title">Title</span>
+                <p ng-show="keyWordList.keyWords.length > 0" ng-repeat="keyWord in keyWordList.keyWords">{{keyWord}} is what you should keep away from!<br /></p>
+            </div>
+            <div class="card-action">
+                <a href="#">This is a link</a>
+                <a href="#">This is a link</a>
+            </div>
+            </div>
         <button id="setting" class="waves-effect waves-light btn">setting</button>
         <a class="waves-effect waves-light btn right">button</a>
       </div>

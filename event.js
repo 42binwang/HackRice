@@ -1,3 +1,5 @@
+var useable=true;
+
 chrome.runtime.onMessage.addListener(function (request, sender) {
     if (request.action == "getSource") {
         chrome.storage.local.set({ "sourceMsg": request.source }, function () {
@@ -11,6 +13,11 @@ chrome.runtime.onMessage.addListener(function (request, sender) {
         chrome.storage.local.set({ "keyWord": request.source }, function () {
             logKeyWord();
         })
+    }
+
+    if (request.action == "changeUse") {
+        console.log("here");
+        useable = request.source;
     }
 });
 function filterMsg() {
@@ -60,13 +67,13 @@ function onWindowLoad() {
     // var message = document.querySelector('#message');
     console.log("ppp");
     chrome.webNavigation.onCompleted.addListener(function(details) {
-        if(details.frameId == 0)
+        if (details.frameId == 0 && useable)
             getSource(details.tabId);
     }); 
 
     chrome.webNavigation.onHistoryStateUpdated.addListener(function (details) {
         console.log(details);
-        if (details.frameId == 0) {
+        if (details.frameId == 0 && useable) {
             console.log("xx");
             setTimeout(getSource, 3000,details.tabId);
         }
