@@ -127,12 +127,12 @@ function Run() {
             }
             chrome.storage.local.set({ "detected": senwords });
 
-            if (flag == true) alert("Need Help?");
+            if (flag == true) alert("Need Help?\nContact: 832-824-1000");
             else {
                 var text = DOMtoString(document).toLowerCase();
                 var sentimood = new Sentimood();
                 var analysis = sentimood.analyze(text);
-                if (analysis["score"] < -100) alert("Negative News!");
+                if (analysis["score"] < -100) alert("Need Help?\nContact: 832-824-1000");
             }
         })
     })

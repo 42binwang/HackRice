@@ -24,19 +24,19 @@
         <div class="card blue-grey darken-1">
             <div ng-controller="chickenSoupSwitchController as chickenSoupSwitch">
                 <div ng-show="chickenSoupSwitch.chickenSoupSwitch" class="card-content white-text" ng-controller="chickenListController as chickenList">
-                    <span class="card-title">Card Title</span>
+                    <span class="card-title">You Need to Know.</span>
                     <p ng-repeat="chicken in chickenList.showList track by $index"><br/>{{chicken}}<br/></p>
                 </div>
             </div>
             <div ng-controller="keyWordsSwitchController as keyWordsSwitch">
                 <div ng-show="keyWordsSwitch.keyWordsSwitch" class="card-content white-text" ng-controller="keyWordListController as keyWordList">
-                    <span class="card-title">Title</span>
+                    <span ng-show="keyWordList.keyWords.length > 0" class="card-title">Remember.</span>
                     <p ng-show="keyWordList.keyWords.length > 0" ng-repeat="keyWord in keyWordList.keyWords track by $index">{{keyWord}} is what you should keep away from!<br /></p>
                 </div>
             </div>
             <div class="card-action">
-                <a href="#">This is a link</a>
-                <a href="#">This is a link</a>
+                <a href="http://www.texaschildrens.org/" target="_blank">Need Help?</a>
+                <a href="mailto:bin.wang@rice.edu" target="_blank">Contact Us</a>
             </div>
             </div>
         <button id="setting" class="waves-effect waves-light btn">setting</button>
