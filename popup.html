@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html style=''>
+<html ng-app>
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <script src="js/angular.min.js"></script>
     <script src="popup.js"></script>
 </head>
-<body style="width:300px;">
+<body style="width:300px">
 	<nav>
 		<div class="nav-wrapper">
 			<div class="col s12 m6">
@@ -12,8 +13,8 @@
 			</div>
 			<div class="switch right">
 			<label>
-				<input type="checkbox">
-				<span class="lever"></span>
+				<input type="checkbox" ng-model="use">
+				<span class="lever">{{use}}</span>
 			</label>
 			</div>
 		</div>
@@ -24,12 +25,6 @@
             <div class="card-content white-text">
               <span class="card-title">Card Title</span>
               <p id="chickensoup">I am a very simple card.</p>
-              <div id="suicide" style="display:none">
-                don't suicide!!!!!
-              </div>
-              <div id="rage" style="display:none">
-                rage ni mb!>>?
-              </div>
             </div>
             <div class="card-action">
               <a href="#">This is a link</a>
