@@ -69,7 +69,7 @@ function Run() {
         var text = DOMtoString(document).toLowerCase();
         var sentimood = new Sentimood();
         var analysis = sentimood.analyze(text);
-        if(analysis["score"]<-50) alert("Negative News!");
+        if(analysis["score"]<-100) alert("Negative News!");
     }
 }
 
