@@ -211,7 +211,10 @@ window.onload = function () {
         var result = "";
         for(var i=0; i<urls.length;i++){
             console.log(urls[i])
-            result += urls[i]+"<br>";
+            if(urls[i].length > 90) result += urls[i].substring(0,urls[i]/4)+urls[i].substring(urls[i]/4,urls[i]/2)+urls[i].substring(urls[i]/2,3*urls[i]/4)+urls[i].substring(3*urls[i]/4)+"<br>"+"<br>"
+            else if(urls[i].length > 60) result += urls[i].substring(0,urls[i]/3)+urls[i].substring(urls[i]/3,2*urls[i]/3)+urls[i].substring(2*urls[i]/3)+"<br>"+"<br>"
+            else if(urls[i].length > 30) result +=urls[i].substring(0,urls[i]/2)+"<br>"+urls[i].substring(urls[i]/2)+"<br>"+"<br>";
+            else result += urls[i]+"<br>"+"<br>";
         }
         showurl.innerHTML = result;
 
