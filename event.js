@@ -1,7 +1,7 @@
-var useSwitch = localStorage.useSwitch;
-var filterSwitch = localStorage.filterSwitch;
-var chickenSoupSwitch = localStorage.chickenSoupSwitch;
-var keyWordsSwitch = localStorage.keyWordsSwitch;
+var useSwitch = (localStorage.useSwitch == "true");
+var filterSwitch = (localStorage.filterSwitch == "true");
+var chickenSoupSwitch = (localStorage.chickenSoupSwitch == "true");
+var keyWordsSwitch = (localStorage.keyWordsSwitch == "true");
 
 chrome.runtime.onMessage.addListener(function (request, sender) {
     if (request.action == "getSource") {
@@ -20,6 +20,7 @@ chrome.runtime.onMessage.addListener(function (request, sender) {
         console.log("changeUseSwitch")
         useSwitch = request.source;
         chrome.storage.local.set({ "useSwitch": useSwitch });
+        console.log(useSwitch)
         localStorage.useSwitch = useSwitch;
     }
 
@@ -64,6 +65,7 @@ function logKeyWord() {
 }
 
 function getSource(tabId) {
+
     chrome.tabs.executeScript(tabId, {
         file: "sentimood.js"
     },
@@ -76,16 +78,16 @@ function getSource(tabId) {
             if (chrome.runtime.lastError) {
                 //message.innerText = 'There was an error injecting script : \n' + chrome.runtime.lastError.message;
             }
-        }); 
+        });
         // If you try and inject into an extensions page or the webstore/NTP you'll get an error
         if (chrome.runtime.lastError) {
             //message.innerText = 'There was an error injecting script : \n' + chrome.runtime.lastError.message;
         }
-    });
+    })
 }
 
 function onWindowLoad() {
-
+    console.log(useSwitch)
     chrome.storage.local.set({ "useSwitch": useSwitch });
     chrome.storage.local.set({ "filterSwitch": filterSwitch });
     chrome.storage.local.set({ "chickenSoupSwitch": chickenSoupSwitch });
