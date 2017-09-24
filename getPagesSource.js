@@ -99,41 +99,46 @@ function Run() {
         }
         chrome.storage.local.set({ "url": urlss });
 
-        chrome.storage.local.get("sense", (items) => {
-            var text = document.body.innerHTML.toLowerCase();
-            var flag = false;
-            var senwords = [];
-            var keywords = items.sense;
-            //put the words in the localStorage
-            localStorage.words = keywords;
-
-            for (var i = 0; i < keywords.length; i++) {
-                if (text.indexOf(keywords[i]) != -1) {
-                    flag = true;
-                    senwords.push(keywords[i]);
-                    String.prototype.str_times = function (max) {
-                        var ret = this;
-                        for (var i = 0; i < max - 1; i++) {
-                            ret += this;
+        chrome.storage.local.get("sense", (senseItems) => {
+            
+            chrome.storage.local.get("filterSwitch", (items) => {
+                var text = document.body.innerHTML.toLowerCase();
+                var flag = false;
+                var senwords = [];
+                var keywords = senseItems.sense;
+                //put the words in the localStorage
+                localStorage.words = keywords;
+                console.log(keywords);
+                var filterSwitch = items.filterSwitch;
+                for (var i = 0; i < keywords.length; i++) {
+                    if (text.indexOf(keywords[i]) != -1) {
+                        flag = true;
+                        senwords.push(keywords[i]);
+                        String.prototype.str_times = function (max) {
+                            var ret = this;
+                            for (var i = 0; i < max - 1; i++) {
+                                ret += this;
+                            }
+                            return ret;
                         }
-                        return ret;
-                    }
-                    {
-                        document.body.innerHTML = document.body.innerHTML.replace(new RegExp(keywords[i], 'gm'), "*".str_times(keywords[i].length))
-                        document.body.innerHTML = document.body.innerHTML.replace(new RegExp(keywords[i].toUpperCase(), 'gm'), "*".str_times(keywords[i].length))
-                        document.body.innerHTML = document.body.innerHTML.replace(new RegExp(keywords[i].substring(0, 1).toUpperCase() + keywords[i].substring(1), 'gm'), "*".str_times(keywords[i].length))
+                        if(filterSwitch)
+                        {
+                            document.body.innerHTML = document.body.innerHTML.replace(new RegExp(keywords[i], 'gm'), "*".str_times(keywords[i].length))
+                            document.body.innerHTML = document.body.innerHTML.replace(new RegExp(keywords[i].toUpperCase(), 'gm'), "*".str_times(keywords[i].length))
+                            document.body.innerHTML = document.body.innerHTML.replace(new RegExp(keywords[i].substring(0, 1).toUpperCase() + keywords[i].substring(1), 'gm'), "*".str_times(keywords[i].length))
+                        }
                     }
                 }
-            }
-            chrome.storage.local.set({ "detected": senwords });
+                chrome.storage.local.set({ "detected": senwords });
 
-            if (flag == true) alert("Need Help?\nContact: 832-824-1000");
-            else {
-                var text = DOMtoString(document).toLowerCase();
-                var sentimood = new Sentimood();
-                var analysis = sentimood.analyze(text);
-                if (analysis["score"] < -100) alert("Need Help?\nContact: 832-824-1000");
-            }
+                if (flag == true) alert("Need Help?\nContact: 832-824-1000");
+                else {
+                    var text = DOMtoString(document).toLowerCase();
+                    var sentimood = new Sentimood();
+                    var analysis = sentimood.analyze(text);
+                    if (analysis["score"] < -100) alert("Need Help?\nContact: 832-824-1000");
+                }
+            })
         })
     })
 }
