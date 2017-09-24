@@ -17,6 +17,7 @@ chrome.runtime.onMessage.addListener(function (request, sender) {
     }
 
     if (request.action == "changeUseSwitch") {
+        console.log("changeUseSwitch")
         useSwitch = request.source;
         chrome.storage.local.set({ "useSwitch": useSwitch });
         localStorage.useSwitch = useSwitch;
@@ -91,15 +92,19 @@ function onWindowLoad() {
     chrome.storage.local.set({ "keyWordsSwitch": keyWordsSwitch });
     console.log(useSwitch);
 
-    chrome.webNavigation.onCompleted.addListener(function(details) {
-        if (details.frameId == 0 && useSwitch)
+    chrome.webNavigation.onCompleted.addListener(function (details) {
+        console.log(useSwitch);
+        if ((details.frameId == 0) && useSwitch == true) {
+            console.log("here" + (details.frameId == 0 && useSwitch));
             getSource(details.tabId);
+        }
     }); 
 
     chrome.webNavigation.onHistoryStateUpdated.addListener(function (details) {
-        console.log(details);
-        if (details.frameId == 0 && useSwitch) {
-            setTimeout(getSource, 3000,details.tabId);
+        console.log(useSwitch);
+        if (details.frameId == 0 && useSwitch == true) {
+            console.log("here2");
+            setTimeout(getSource, 3000, details.tabId)
         }
     })
 }

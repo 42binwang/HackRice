@@ -23,7 +23,7 @@ angular.module('popupApp', [])
       useSwitch.changeUseSwitch = function () {
           chrome.runtime.sendMessage({
               action: "changeUseSwitch",
-              source: use.useSwitch
+              source: useSwitch.useSwitch
           });
       }
 
@@ -34,7 +34,7 @@ angular.module('popupApp', [])
           }
       });
   })
-    .controller('chickenSoupSwitchController', function () {
+    .controller('chickenSoupSwitchController', function ($scope) {
         var chickenSoupSwitch = this;
 
         chickenSoupSwitch.chickenSoupSwitch = true;
@@ -53,7 +53,7 @@ angular.module('popupApp', [])
             }
         });
     })
-    .controller('keyWordsSwitchController', function () {
+    .controller('keyWordsSwitchController', function ($scope) {
         var keyWordsSwitch = this;
 
         keyWordsSwitch.keyWordsSwitch = true;
