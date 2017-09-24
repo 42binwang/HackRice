@@ -51,6 +51,7 @@ window.onload = function(){
 
     var parentUnchecked = true;
     var parent = document.getElementById("parent");
+	parent.onclick=function(){
         if (parentUnchecked) {
             var input = prompt("Password Required!", "Please Input password");
             var passwd = "123456";
