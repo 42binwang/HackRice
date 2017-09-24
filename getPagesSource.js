@@ -59,6 +59,8 @@ function Check(isReplace)
     for(var i=0; i<senwords.length; i++) {
         console.log(senwords[i]);
     }
+    //store the word(detected from present webpage) in the database
+    chrome.storage.local.set({"sense":senwords});
     return flag;
 }
 

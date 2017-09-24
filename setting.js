@@ -2,62 +2,51 @@ window.onload = function(){
     chrome.storage.local.get("sense",(items)=>{
         var show = document.getElementById("ww");
         show.innerHTML = items.sense;
-        console.log(show)
         })
-
+//store the word you input in the database
     var newword = document.getElementById("update");
     newword.onclick = function(){
         var newword = document.getElementById("newword");
         console.log(newword.value);
         
         chrome.storage.local.get("sense",(items)=>{
-            console.log(newword.value);
-            
             var words = items.sense;
-            words.push(newword.value);
-            console.log(words);
+            var contains = false;
+            //if the word is already in the database, don't store it again
+            for(var word in words) {
+                if(word == newword.value) contains = true;
+            }
+            if(!contains) words.push(newword.value);
             chrome.storage.local.set({"sense":words});
-            console.log(items.sense);
-
             var show = document.getElementById("ww");
             show.innerHTML = items.sense;
-            console.log(show)   
             })
     }
+//clear the input 
     var thenewword = document.getElementById("newword");
     thenewword.onclick = function(){
-        var tag = document.getElementsByTagName("input");
-        for(var i = 0; i < tag.length; i++) {
-            if(tag[i].id == "newword" ) {
-                tag[i].value = "";
-            }
-        } 
+        thenewword.value = "";
     }
-
+//delete the word you input from the database
     var delet = document.getElementById("delete");
     delet.onclick = function() {
         var deleteword = document.getElementById("deleteword");
         chrome.storage.local.get("sense",(items)=>{
             var wholewords = items.sense;
-            for(var k=0; k<wholewords; k++){
+            for(var k=0; k<wholewords.length; k++){
                 if(wholewords[k] == deleteword.value){
                     wholewords.splice(k,1);
                 }
             }
             chrome.storage.local.set({"sense":wholewords});
-            console.log(items.sense);
             var show = document.getElementById("ww");
             show.innerHTML = items.sense;
             })
     }
+    //clear the input
     var deleteword = document.getElementById("deleteword");
     deleteword.onclick = function(){
-        var tag = document.getElementsByTagName("input");
-        for(var i = 0; i < tag.length; i++) {
-            if(tag[i].id == "deleteword" ) {
-                tag[i].value = "";
-            }
-        } 
+        deleteword.value = "";
     }
 
     var parentUnchecked = true;
