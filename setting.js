@@ -70,9 +70,68 @@ angular.module('settingApp', [])
           }
       });
 
-  });
+  })
+.controller("ruleListController", function () {
+    var ruleList = this;
+
+    ruleList.rules = ["suicide", "mutilation", "raid", "maltreat", "violence", "abuse", "crime", "bullyrag"];
+
+    ruleList.deleteRule = function (rule) {
+        for (var i = 0; i < ruleList.rules.length; i++) {
+            if (ruleList.rules[i] == rule) {
+                ruleList.rules.splice(i, 1);
+            }
+        }
+        // var show = document.getElementById("ww");
+        chrome.storage.local.set({ "sense": ruleList.rules });
+    }
+
+    ruleList.addRule = function (rule) {
+        var contains = false;
+        //if the word is already in the database, don't store it again
+        for (var i = 0; i < ruleList.rules.length; i++) {
+            if (ruleList.rules[i] == rule) {
+                contains = true;
+                break;
+            } 
+        }
+        if (!contains) ruleList.rules.push(rule);
+        chrome.storage.local.set({ "sense": ruleList.rules });
+    }
+}).
+    controller("parentController", function () {
+        var parent = this;
+
+        console.log(localStorage);
+        parent.pass = false;
+        parent.hasPass = !(localStorage.parentPassword == undefined);
+        console.log(parent.hasPass)
+
+        parent.confirmPassword = function (password) {
+            if (localStorage.parentPassword == password) {
+                parent.pass = true;
+                return true;
+            }
+        }
+
+        parent.setPassword = function (password) {
+            console.log(localStorage);
+            localStorage.parentPassword = password;
+            parent.pass = false;
+            parent.hasPass = true;
+        }
+        
+        parent.deletePassword = function (password) {
+            console.log("here");
+            if (parent.confirmPassword(password))
+                localStorage.removeItem("parentPassword");
+            parent.pass = true;
+            parent.hasPass = false;
+        }
+    })
 
 window.onload = function () {
+    /*
     var keywords = ["suicide", "mutilation", "raid", "maltreat", "violence", "abuse", "crime", "bullyrag"];
     var show = document.getElementById("ww");
     show.innerHTML = keywords;
@@ -120,8 +179,9 @@ window.onload = function () {
     var deleteword = document.getElementById("deleteword");
     deleteword.onclick = function(){
         deleteword.value = "";
-    }
+    }*/
 
+    /*
     var parentUnchecked = true;
     var parent = document.getElementById("parent");
 	parent.onclick=function(){
@@ -142,7 +202,7 @@ window.onload = function () {
                 alert("Wrong password");
             }
         }
-    }
+    }*/
 
     //the code for log
     var showurl = document.getElementById("showurl");

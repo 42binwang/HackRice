@@ -89,9 +89,8 @@ function onWindowLoad() {
     chrome.storage.local.set({ "filterSwitch": filterSwitch });
     chrome.storage.local.set({ "chickenSoupSwitch": chickenSoupSwitch });
     chrome.storage.local.set({ "keyWordsSwitch": keyWordsSwitch });
-    console.log(keyWordsSwitch);
+    console.log(useSwitch);
 
-    // var message = document.querySelector('#message');
     chrome.webNavigation.onCompleted.addListener(function(details) {
         if (details.frameId == 0 && useSwitch)
             getSource(details.tabId);
@@ -103,13 +102,6 @@ function onWindowLoad() {
             setTimeout(getSource, 3000,details.tabId);
         }
     })
-
-    //chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab){
-    //    console.log(changeInfo);
-    //})
-
-    //getSource();
-
 }
 
 window.onload = onWindowLoad;

@@ -20,18 +20,18 @@
         </div>
     </nav>
 
-    <div class="card">
+    <div class="card" ng-controller="parentController as parent">
         <div class="card-tabs">
             <ul class="tabs tabs-fixed-width">
-                <li class="tab disabled" id="main"><a href="#test4">Main</a></li>
-                <li class="tab disabled" id="rules"><a href="#test5">Rules</a></li>
-                <li class="tab disabled" id="log"><a href="#test6">Log</a></li>
-                <li class="tab" id="parent"><a href="#test7" class="active">Parent</a></li>
-                <li class="tab"><a href="#test8">About</a></li>
+                <li class="tab" ng-class="['tab',{disabled:parent.hasPass && !parent.pass}]" id="main"><a href="#main_tab">Main</a></li>
+                <li class="tab" ng-class="['tab',{disabled:parent.hasPass && !parent.pass}]" id="rules"><a href="#rules_tab">Rules</a></li>
+                <li class="tab" ng-class="['tab',{disabled:parent.hasPass && !parent.pass}]" id="log"><a href="#log_tab">Log</a></li>
+                <li class="tab" id="parent"><a href="#parent_tab" class="active">Parent</a></li>
+                <li class="tab"><a href="#about_tab">About</a></li>
             </ul>
         </div>
         <div class="card-content grey lighten-4">
-            <div id="test4" ng-controller="mainSettingController as mainSetting">
+            <div id="main_tab" ng-controller="mainSettingController as mainSetting">
                 <div class="collection">
                     <div class="collection-item">
                         General
@@ -72,79 +72,90 @@
                 </div>
             </div>
 
-
-
-
-
             <!-- RULES -->
-            <div id="test5">
-                    <div class="collection">
-                        <a class="collection-item">
-                         <h4 class="truncate " id="ww">
-                             
-                         </h4>
-
-                            <div>
-                                <!-- input the word you want to prohibit -->
-                                <input type="text" id="newword">
-                                <input class="waves-effect waves-light btn" type="submit" value="update" id="update"> <br>
-                                <!-- delete the word you don't want to prohibit -->
-                                <input type="text" id="deleteword">
-                                <input class="waves-effect waves-light btn" type="submit" value="delete" id="delete"> 
+            <div id="rules_tab" >
+                <div class="col s12">
+                    <div class="collection" ng-controller="ruleListController as ruleList">
+                        <div ng-repeat="rule in ruleList.rules" class="collection-item col s12" style="height:50px">
+                            {{rule}}
+                            <div class="switch right">
+                                <a class="waves-effect waves-light btn" ng-click="ruleList.deleteRule(rule)">Delete</a>
                             </div>
-                        </a> 
+                        </div>
+
+                        <div class="collection-item row">
+                            <div class="input-field col s6">
+                                <input placeholder="Rule" type="text" class="validate" ng-model="ruleToAdd">
+                            </div>
+                            <div class="switch right">
+                                <a class="waves-effect waves-light btn" ng-click="ruleList.addRule(ruleToAdd);ruleToAdd=''">Add</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div id="test6">History
-                        <div id="showurl">
-        
-        
-                        </div>
-                    </div>
-            <!-- PARENT -->
-            <div id="test7">Test 4</div>
-            <!-- ABOUT -->
-            <div id="test8">
-                    <div class="collection">
-                            <a class="collection-item">
-                                some information..
-                            </a> 
-                        </div>
-                        <div style="text-align:center">Contact Us</div><br>
-                        <div style="float:left; margin: 0cm 0 0 8cm">
-                            TEL: 340-200-1000
-                        </div>
-                        <div style="float:right; margin: 0cm 8cm 0 0">
-                            FAX: 200-100-3000
-                        </div><br>
-                        <div style="float:left; margin: 0 0 0 8cm">
-                            TEL: 430-100-2000
-                        </div>
-                        <div style="float:right; margin: 0 8cm 0 0">
-                            FAX: 300-130-2000
-                        </div><br><br>
-                        <div style="margin-left:0.5cm">
-                            America    
-                        </div>
-                        <div><hr style="height:1px;border:none;border-top:1px solid; color:#4B5E4F;" /></div>
-                        <div style="width:800px; margin:0 auto">
-                            <div>
-                                <img style="float:left; margin: 0 0 100px 0" height="80px"src="http://static.home.baidu.com/homebd/jhmlgefinkadbc1496932028.png?authorization=bce-auth-v1%2Fe6803def36ae467f81ebdb4bdc75f119%2F2017-06-08T14%3A27%3A08Z%2F-1%2F%2F3d81f1beeb8a94b113e4fffd76669f666547f9de7d60fd28ebc4126339f92536">
-                            </div>
-                            <div style="font-size:2em; float:right; color:#318FC9">
-                                Rice University
-                            </div><br><br><br>
-                            <div style="float:right">
-                                6100 Main St, Houston
-                            </div><br>
-                            <div style="float:right">
-                                Post Code: TX 77005
-                            </div>
-                        </div>
             </div>
-            
-
-                
+            <div id="log_tab">History
+                <div id="showurl"></div>
+            </div>
+            <!-- PARENT -->
+            <div id="parent_tab">
+                <div class="row">
+                    <form class="col s12">
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <input id="password" type="password" class="validate" ng-model="password">
+                                <label for="password">Password</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <a ng-show="parent.hasPass" class="waves-effect waves-light btn" ng-click="parent.confirmPassword(password)">Confirm</a>
+                                <a ng-show="parent.hasPass" class="waves-effect waves-light btn" ng-click="parent.deletePassword(password)">Delete</a>
+                                <a ng-show="!parent.hasPass" class="waves-effect waves-light btn" ng-click="parent.setPassword(password)">Set</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- ABOUT -->
+            <div id="about_tab">
+                <div class="collection">
+                    <a class="collection-item">
+                        some information..
+                    </a> 
+                </div>
+                <div style="text-align:center">Contact Us</div><br>
+                <div style="float:left; margin: 0cm 0 0 8cm">
+                    TEL: 340-200-1000
+                </div>
+                <div style="float:right; margin: 0cm 8cm 0 0">
+                    FAX: 200-100-3000
+                </div><br>
+                <div style="float:left; margin: 0 0 0 8cm">
+                    TEL: 430-100-2000
+                </div>
+                <div style="float:right; margin: 0 8cm 0 0">
+                    FAX: 300-130-2000
+                </div><br><br>
+                <div style="margin-left:0.5cm">
+                    America    
+                </div>
+                <div><hr style="height:1px;border:none;border-top:1px solid; color:#4B5E4F;" /></div>
+                <div style="width:800px; margin:0 auto">
+                    <div>
+                        <img style="float:left; margin: 0 0 100px 0" height="80px"src="http://static.home.baidu.com/homebd/jhmlgefinkadbc1496932028.png?authorization=bce-auth-v1%2Fe6803def36ae467f81ebdb4bdc75f119%2F2017-06-08T14%3A27%3A08Z%2F-1%2F%2F3d81f1beeb8a94b113e4fffd76669f666547f9de7d60fd28ebc4126339f92536">
+                    </div>
+                    <div style="font-size:2em; float:right; color:#318FC9">
+                        Rice University
+                    </div><br><br><br>
+                    <div style="float:right">
+                        6100 Main St, Houston
+                    </div><br>
+                    <div style="float:right">
+                        Post Code: TX 77005
+                    </div>
+                </div>
+            </div>   
         </div>
     </div>
 </body>

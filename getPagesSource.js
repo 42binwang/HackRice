@@ -84,7 +84,6 @@ function Check(isReplace)
 }
 
 function Run() {    
-    console.log("Test");
     if(Check(1)==true) alert("Need Help?");
     else{
         var text = DOMtoString(document).toLowerCase();
