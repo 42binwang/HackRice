@@ -4,6 +4,7 @@ Mental health draws attention these days. As internet penetrates into our daily 
 ## Function
 Because of the purpose, we chose to develop a Chrome plugin naturally. When enabled, the plugin will replace some extreme words, notify how negative the contents, provide contacts to professional help and offer a way for temporary relaxation. For parents, we set a lock to ensure the parents have supervision and control on what their children read, and record the history of negative websites and their degree.
 
+## Owls
 We chose the owl as our icon based on several reason.
 1.	The owl is the mascot of Rice.
 2.	The owl has a keen sight and can be represented as supervision
