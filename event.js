@@ -3,8 +3,6 @@ var useable=true;
 chrome.runtime.onMessage.addListener(function (request, sender) {
     if (request.action == "getSource") {
         chrome.storage.local.set({ "sourceMsg": request.source }, function () {
-            // message.innerText = "1";
-            
             filterMsg();
         });
     }
@@ -16,8 +14,8 @@ chrome.runtime.onMessage.addListener(function (request, sender) {
     }
 
     if (request.action == "changeUse") {
-        console.log("here");
         useable = request.source;
+        chrome.storage.local.set({ "useable": useable });
     }
 });
 function filterMsg() {
@@ -65,7 +63,6 @@ function getSource(tabId) {
 
 function onWindowLoad() {
     // var message = document.querySelector('#message');
-    console.log("ppp");
     chrome.webNavigation.onCompleted.addListener(function(details) {
         if (details.frameId == 0 && useable)
             getSource(details.tabId);
@@ -74,7 +71,6 @@ function onWindowLoad() {
     chrome.webNavigation.onHistoryStateUpdated.addListener(function (details) {
         console.log(details);
         if (details.frameId == 0 && useable) {
-            console.log("xx");
             setTimeout(getSource, 3000,details.tabId);
         }
     })

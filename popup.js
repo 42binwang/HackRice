@@ -1,7 +1,6 @@
 window.onload = function () {
     var setting = document.querySelector('#setting');
     setting.onclick = function () { openSetting(); };
-    //the popup page will show different chickensoup based on the key words detected
 }
 
 function openSetting() {
@@ -10,14 +9,21 @@ function openSetting() {
 }
 
 angular.module('popupApp', [])
-  .controller('useController', function () {
+  .controller('useController', function ($scope) {
       var use = this;
-      use.use = true;
+      use.useable = true;
 
-      use.test = function () {
+      chrome.storage.local.get("useable", (items) => {
+          if (items.useable != undefined) {
+              use.useable = items.useable;
+          }
+          $scope.$apply();
+      });
+
+      use.change = function () {
           chrome.runtime.sendMessage({
               action: "changeUse",
-              source: use.use
+              source: use.useable
           });
       }
   })
