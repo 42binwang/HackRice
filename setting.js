@@ -13,8 +13,8 @@ window.onload = function(){
             var words = items.sense;
             var contains = false;
             //if the word is already in the database, don't store it again
-            for(var word in words) {
-                if(word == newword.value) contains = true;
+            for(var i=0; i<words.length; i++) {
+                if(words[i] == newword.value) contains = true;
             }
             if(!contains) words.push(newword.value);
             chrome.storage.local.set({"sense":words});
